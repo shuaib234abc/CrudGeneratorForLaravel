@@ -4,4 +4,7 @@
 @import "~bootstrap/dist/css/bootstrap.min.css";
 
 .form-group label, .span_bold { font-weight:600; }
-.form-group { padding-bottom:7% }
+.form-group { margin-bottom:3%;padding:3%;border:1px solid lightblue;box-shadow:2px 5px 5px #888888; }
+.row {margin-top:9%;padding-top:4%;border-top:1px solid darkgray;}
+.normal-row {margin-top:0%;padding-top:0%;border-top:0px;}
+button[type=submit]{font-size:1.6em}

@@ -1,8 +1,8 @@
 <!-- references: https://www.freecodecamp.org/news/how-to-validate-angular-reactive-forms/ -->
 
 <div class="container">
-  <div class="row">
-      <div class="col-md-8 mx-auto">
+  <div class="row normal-row">
+      <div class="col-md-11 mx-auto">
           <div class="card">
               <div class="card-header">
                   <h3>CRUD Generator for Laravel App</h3>
@@ -19,49 +19,48 @@
 					                  If your OS is Linux: specify path like: /home/shoeb/Documents/my-project
 					                  <br />
 					                  If your OS is Windows: specify path like: C:\Users\shoeb\Documents\my-project
-                          </p>                          
+                          </p>
                           <span class="text-danger"
                               *ngIf="(dataEntryFormControl.webAppSourceCodePath.touched || submitted) && dataEntryFormControl.webAppSourceCodePath.errors?.required">
                               Web app source code path is required
                           </span>
                       </div>
 
+                      <div class="form-group">
+                        <label>DB Table name</label>
+                        <input type="text" class="form-control" formControlName="tableName" placeholder="DB Table name">
+                        <span class="text-danger"
+                            *ngIf="(dataEntryFormControl.tableName.touched || submitted) && dataEntryFormControl.tableName.errors?.required">
+                            DB Table name is required
+                        </span>
+                      </div>
+
+                      <div class="form-group">
+                        <label>Migration class name</label>
+                        <input type="text" class="form-control" formControlName="migrationClassName" placeholder="Migration class name">
+                        <p>
+                          As per the table definitons you will provide, a Laravel migration class will be generated. Please provide the name of that class.
+                        </p>
+                        <span class="text-danger"
+                            *ngIf="(dataEntryFormControl.migrationClassName.touched || submitted) && dataEntryFormControl.migrationClassName.errors?.required">
+                            Migration class name is required
+                        </span>
+                      </div>
+
                       <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-md-5">
                           <span class="span_bold">Database Table definitons</span>
                         </div>
-                        <div class=="col-md-9">
-
-                          <div class="form-group">
-                            <label>Table name</label>
-                            <input type="text" class="form-control" formControlName="tableName" placeholder="Table name">                                                      
-                            <span class="text-danger"
-                                *ngIf="(dataEntryFormControl.tableName.touched || submitted) && dataEntryFormControl.tableName.errors?.required">
-                                Table name is required
-                            </span>
-                          </div>
-
-                          <div class="form-group">
-                            <label>Migration class name</label>
-                            <input type="text" class="form-control" formControlName="migrationClassName" placeholder="Migration class name">                                                      
-                            <p>
-                              As per the table definitons you will provide, a Laravel migration class will be generated. Please provide the name of that class.
-                            </p>                                 
-                            <span class="text-danger"
-                                *ngIf="(dataEntryFormControl.migrationClassName.touched || submitted) && dataEntryFormControl.migrationClassName.errors?.required">
-                                Migration class name is required
-                            </span>
-                          </div>                          
-
+                        <div class="col-md-7">
                           <div class="form-group">
                             <label>Column name</label>
-                            <input type="text" class="form-control" formControlName="columnName" placeholder="Column name">                                                      
+                            <input type="text" class="form-control" formControlName="columnName" placeholder="Column name">
                             <span class="text-danger"
                                 *ngIf="(dataEntryFormControl.columnName.touched || submitted) && dataEntryFormControl.columnName.errors?.required">
                                 Column name is required
                             </span>
-                          </div>     
-                          
+                          </div>
+
                           <div class="form-group">
                             <label>Column type</label>
                             <select class="form-control" formControlName="columnType">
@@ -76,17 +75,17 @@
                                 *ngIf="(dataEntryFormControl.columnType.touched || submitted) && dataEntryFormControl.columnType.errors?.required">
                                 Column type is required
                             </span>
-                          </div>      
-                          
+                          </div>
+
                           <div class="form-group">
                             <label>Column length</label>
-                            <input type="number" class="form-control" formControlName="columnLength" placeholder="Column length">                                                      
+                            <input type="number" class="form-control" formControlName="columnLength" placeholder="Column length">
                             <span class="text-danger"
                                 *ngIf="(dataEntryFormControl.columnLength.touched || submitted) && dataEntryFormControl.columnLength.errors?.required">
                                 Column length is required
                             </span>
-                          </div> 
-                          
+                          </div>
+
                           <div class="form-group">
                             <label>Column is nullable?</label>
                             <select class="form-control" formControlName="columnNullable">
@@ -97,8 +96,7 @@
                                 *ngIf="(dataEntryFormControl.columnNullable.touched || submitted) && dataEntryFormControl.columnNullable.errors?.required">
                                 Column is nullable is required
                             </span>
-                          </div>                             
-
+                          </div>
                         </div>
                       </div>
 
@@ -107,7 +105,7 @@
                         <input type="text" class="form-control" formControlName="entityNameSingular" placeholder="Entity name (singular)">
                         <p>
                           E.g. Person, Customer, Book, Salary
-                        </p>                          
+                        </p>
                         <span class="text-danger"
                             *ngIf="(dataEntryFormControl.entityNameSingular.touched || submitted) && dataEntryFormControl.entityNameSingular.errors?.required">
                             Entity name (singular) is required
@@ -119,7 +117,7 @@
                         <input type="text" class="form-control" formControlName="entityNamePlural" placeholder="Entity name (plural)">
                         <p>
                           E.g. Persons, Customers, Book, Salaries
-                        </p>                          
+                        </p>
                         <span class="text-danger"
                             *ngIf="(dataEntryFormControl.entityNamePlural.touched || submitted) && dataEntryFormControl.entityNamePlural.errors?.required">
                             Entity name (plural) is required
@@ -133,193 +131,184 @@
                           E.g. persons, customers, book, salaries
                           <br />
                           There will be four generated blade template files for each entity. These files will be kept in a separate folder. Specify the folder name here.
-                        </p>                          
+                        </p>
                         <span class="text-danger"
                             *ngIf="(dataEntryFormControl.nameOfFolderContainingViews.touched || submitted) && dataEntryFormControl.nameOfFolderContainingViews.errors?.required">
                             Name of folder containing views is required
                         </span>
-                      </div>      
-                      
+                      </div>
+
                       <div class="form-group">
-                        <label>selectClauseOfQueryForGrid</label>
+                        <label>Select Clause Of Query For Grid</label>
                         <input type="text" class="form-control" formControlName="selectClauseOfQueryForGrid" placeholder="Select clause of query for grid">
                         <p>
                           E.g.&nbsp;&nbsp;&nbsp;select('id', 'name', 'destination_type', 'cost', 'cost_unit', 'maximum_distance')
                           <br />
                           In the view page showing all existing DB rows, raw SQL query will be used to populate the data grid. Specify the select clause of the raw SQL query. Do not include the from clause or where clause. Please check the example and write accordingly.
-                        </p>                          
+                        </p>
                         <span class="text-danger"
                             *ngIf="(dataEntryFormControl.selectClauseOfQueryForGrid.touched || submitted) && dataEntryFormControl.selectClauseOfQueryForGrid.errors?.required">
-                            selectClauseOfQueryForGrid is required
+                            Select Clause Of Query For Grid is required
                         </span>
-                      </div>            
-                      
-                      
+                      </div>
+
                       <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-md-5">
                           <span class="span_bold">UI Grid Definitons</span>
                           <p>
                             Here you have to provide some data regarding the HTML grid that will display all DB rows.
                           </p>
                         </div>
-                        <div class=="col-md-9">
+                        <div class="col-md-7">
+                                                    <div class="form-group">
+                                                      <label>Column header name</label>
+                                                      <input type="text" class="form-control" formControlName="columnHeaderName" placeholder="Column header name">
+                                                      <span class="text-danger"
+                                                          *ngIf="(dataEntryFormControl.columnHeaderName.touched || submitted) && dataEntryFormControl.columnHeaderName.errors?.required">
+                                                          Column header name is required
+                                                      </span>
+                                                    </div>
 
-                          <div class="form-group">
-                            <label>Column header name</label>
-                            <input type="text" class="form-control" formControlName="columnHeaderName" placeholder="Column header name">                                                      
-                            <span class="text-danger"
-                                *ngIf="(dataEntryFormControl.columnHeaderName.touched || submitted) && dataEntryFormControl.columnHeaderName.errors?.required">
-                                Column header name is required
-                            </span>
-                          </div>
-
-                          <div class="form-group">
-                            <label>Corresponding DB field name</label>
-                            <input type="text" class="form-control" formControlName="correspondingDbFieldName" placeholder="Corresponding DB field name">                                                      
-                            <p>
-                              What is the name of the DB table field that will be used for the column header given above?
-                            </p>                                 
-                            <span class="text-danger"
-                                *ngIf="(dataEntryFormControl.migrationClassName.touched || submitted) && dataEntryFormControl.migrationClassName.errors?.required">
-                                Corresponding DB field name is required
-                            </span>
-                          </div>                                                                              
-
+                                                    <div class="form-group">
+                                                      <label>Corresponding DB field name</label>
+                                                      <input type="text" class="form-control" formControlName="correspondingDbFieldName" placeholder="Corresponding DB field name">
+                                                      <p>
+                                                        What is the name of the DB table field that will be used for the column header given above?
+                                                      </p>
+                                                      <span class="text-danger"
+                                                          *ngIf="(dataEntryFormControl.correspondingDbFieldName.touched || submitted) && dataEntryFormControl.correspondingDbFieldName.errors?.required">
+                                                          Corresponding DB field name is required
+                                                      </span>
+                                                    </div>
                         </div>
-                      </div>                 
-                      
-                      
+                      </div>
+
                       <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-md-5">
                           <span class="span_bold">UI View Page Definitons</span>
                           <p>
                             Here you have to provide some data regarding the HTML view page that will show a single DB record in view-only mode.
                           </p>
                         </div>
-                        <div class=="col-md-9">
+                        <div class="col-md-7">
+                                                    <div class="form-group">
+                                                      <label>Label</label>
+                                                      <input type="text" class="form-control" formControlName="uiViewPageLabel" placeholder="Label">
+                                                      <span class="text-danger"
+                                                          *ngIf="(dataEntryFormControl.uiViewPageLabel.touched || submitted) && dataEntryFormControl.uiViewPageLabel.errors?.required">
+                                                          Label is required
+                                                      </span>
+                                                    </div>
 
-                          <div class="form-group">
-                            <label>Label</label>
-                            <input type="text" class="form-control" formControlName="uiViewPageLabel" placeholder="Label">                                                      
-                            <span class="text-danger"
-                                *ngIf="(dataEntryFormControl.uiViewPageLabel.touched || submitted) && dataEntryFormControl.uiViewPageLabel.errors?.required">
-                                Label is required
-                            </span>
-                          </div>
+                                                    <div class="form-group">
+                                                      <label>Corresponding DB field name</label>
+                                                      <input type="text" class="form-control" formControlName="uiViewPageLabelCorrespondingDbFieldName" placeholder="Corresponding DB field name">
+                                                      <p>
+                                                        What is the name of the DB table field that will be used for the label given above?
+                                                      </p>
+                                                      <span class="text-danger"
+                                                          *ngIf="(dataEntryFormControl.uiViewPageLabelCorrespondingDbFieldName.touched || submitted) && dataEntryFormControl.uiViewPageLabelCorrespondingDbFieldName.errors?.required">
+                                                          Corresponding DB field name is required
+                                                      </span>
+                                                    </div>
 
-                          <div class="form-group">
-                            <label>Corresponding DB field name</label>
-                            <input type="text" class="form-control" formControlName="uiViewPageLabelCorrespondingDbFieldName" placeholder="Corresponding DB field name">                                                      
-                            <p>
-                              What is the name of the DB table field that will be used for the label given above?
-                            </p>                                 
-                            <span class="text-danger"
-                                *ngIf="(dataEntryFormControl.uiViewPageLabelCorrespondingDbFieldName.touched || submitted) && dataEntryFormControl.uiViewPageLabelCorrespondingDbFieldName.errors?.required">
-                                Corresponding DB field name is required
-                            </span>
-                          </div>  
-                          
-                          
-                          <div class="form-group">
-                            <label>Field type</label>
-                            <select class="form-control" formControlName="uiViewPageFieldType">
-                              <option value="string">string</option>
-                              <option value="image">image</option>
-                            </select>
-                            <span class="text-danger"
-                                *ngIf="(dataEntryFormControl.uiViewPageFieldType.touched || submitted) && dataEntryFormControl.uiViewPageFieldType.errors?.required">
-                                Field type is required
-                            </span>
-                          </div>                           
 
+                                                    <div class="form-group">
+                                                      <label>Field type</label>
+                                                      <select class="form-control" formControlName="uiViewPageFieldType">
+                                                        <option value="string">string</option>
+                                                        <option value="image">image</option>
+                                                      </select>
+                                                      <span class="text-danger"
+                                                          *ngIf="(dataEntryFormControl.uiViewPageFieldType.touched || submitted) && dataEntryFormControl.uiViewPageFieldType.errors?.required">
+                                                          Field type is required
+                                                      </span>
+                                                    </div>
                         </div>
-                      </div>                      
-                      
-                      
+                      </div>
+
                       <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-md-5">
                           <span class="span_bold">UI Form Definitons</span>
                           <p>
                             Here you have to provide some data regarding the HTML form for adding / editing records
                           </p>
                         </div>
-                        <div class=="col-md-9">
+                        <div class="col-md-7">
+                                                    <div class="form-group">
+                                                      <label>Form field label</label>
+                                                      <input type="text" class="form-control" formControlName="formFieldLabel" placeholder="Form field label">
+                                                      <span class="text-danger"
+                                                          *ngIf="(dataEntryFormControl.formFieldLabel.touched || submitted) && dataEntryFormControl.formFieldLabel.errors?.required">
+                                                          Form field label is required
+                                                      </span>
+                                                    </div>
 
-                          <div class="form-group">
-                            <label>Form field label</label>
-                            <input type="text" class="form-control" formControlName="formFieldLabel" placeholder="Form field label">                                                      
-                            <span class="text-danger"
-                                *ngIf="(dataEntryFormControl.formFieldLabel.touched || submitted) && dataEntryFormControl.formFieldLabel.errors?.required">
-                                Form field label is required
-                            </span>
-                          </div>
+                                                    <div class="form-group">
+                                                      <label>Form field type</label>
+                                                      <select class="form-control" formControlName="formFieldType">
+                                                        <option value="text">text</option>
+                                                        <option value="textarea">textarea</option>
+                                                        <option value="file">file</option>
+                                                        <option value="number">number</option>
+                                                        <option value="combobox">combobox</option>
+                                                      </select>
+                                                      <span class="text-danger"
+                                                          *ngIf="(dataEntryFormControl.formFieldType.touched || submitted) && dataEntryFormControl.formFieldType.errors?.required">
+                                                          Form field type is required
+                                                      </span>
+                                                    </div>
 
-                          <div class="form-group">
-                            <label>Form field type</label>
-                            <select class="form-control" formControlName="formFieldType">
-                              <option value="text">text</option>
-                              <option value="textarea">textarea</option>
-                              <option value="file">file</option>
-                              <option value="number">number</option>
-                              <option value="combobox">combobox</option>
-                            </select>
-                            <span class="text-danger"
-                                *ngIf="(dataEntryFormControl.formFieldType.touched || submitted) && dataEntryFormControl.formFieldType.errors?.required">
-                                Form field type is required
-                            </span>
-                          </div> 
-                          
-                          
-                          <div class="form-group">
-                            <label>DB column for this form field</label>
-                            <input type="text" class="form-control" formControlName="dbColumnForThisFormField" placeholder="DB column for this form field">                           
-                            <span class="text-danger"
-                                *ngIf="(dataEntryFormControl.dbColumnForThisFormField.touched || submitted) && dataEntryFormControl.dbColumnForThisFormField.errors?.required">
-                                DB column for this form field is required
-                            </span>
-                          </div>        
-                          
 
-                          <div class="form-group">
-                            <label>Form field is mandatory?</label>
-                            <select class="form-control" formControlName="formFieldIsMandatory">
-                              <option value="true">yes</option>
-                              <option value="false" selected>no</option>
-                            </select>
-                            <span class="text-danger"
-                                *ngIf="(dataEntryFormControl.formFieldIsMandatory.touched || submitted) && dataEntryFormControl.formFieldIsMandatory.errors?.required">
-                                Form field is mandatory is required
-                            </span>
-                          </div>                  
-                          
-                          
-                          <div class="form-group">
-                            <label>Maximum length of form field</label>
-                            <input type="text" class="form-control" formControlName="maximumLengthOfFormField" placeholder="Maximum length of form field"> 
-                            <span class="text-danger"
-                                *ngIf="(dataEntryFormControl.maximumLengthOfFormField.touched || submitted) && dataEntryFormControl.maximumLengthOfFormField.errors?.required">
-                                Maximum length of form field is required
-                            </span>
-                          </div>           
-                          
-                          <div class="form-group">
-                            <label>Validation rules</label>
-                            <select class="form-control" formControlName="validationRules">
-                              <option value="nameWithSpaceRegex">Only alphabets, spaces and the following characters: ' - .</option>
-                              <option value="numberRegex">Only numbers</option>
-                              <option value="moneyRegex">Only monetary values (numbers with two decimal places)</option>
-                              <option value="nameWithSpaceAndNumbersRegex">Only alphabets, numbers, spaces and the following characters: ' - .</option>                                                                                                                                                                 
-                            </select>
-                            <span class="text-danger"
-                                *ngIf="(dataEntryFormControl.validationRules.touched || submitted) && dataEntryFormControl.validationRules.errors?.required">
-                                Validation rules is required
-                            </span>
-                          </div>                             
-                          
+                                                    <div class="form-group">
+                                                      <label>DB column for this form field</label>
+                                                      <input type="text" class="form-control" formControlName="dbColumnForThisFormField" placeholder="DB column for this form field">
+                                                      <span class="text-danger"
+                                                          *ngIf="(dataEntryFormControl.dbColumnForThisFormField.touched || submitted) && dataEntryFormControl.dbColumnForThisFormField.errors?.required">
+                                                          DB column for this form field is required
+                                                      </span>
+                                                    </div>
+
+
+                                                    <div class="form-group">
+                                                      <label>Form field is mandatory?</label>
+                                                      <select class="form-control" formControlName="formFieldIsMandatory">
+                                                        <option value="true">yes</option>
+                                                        <option value="false" selected>no</option>
+                                                      </select>
+                                                      <span class="text-danger"
+                                                          *ngIf="(dataEntryFormControl.formFieldIsMandatory.touched || submitted) && dataEntryFormControl.formFieldIsMandatory.errors?.required">
+                                                          Form field is mandatory is required
+                                                      </span>
+                                                    </div>
+
+
+                                                    <div class="form-group">
+                                                      <label>Maximum length of form field</label>
+                                                      <input type="text" class="form-control" formControlName="maximumLengthOfFormField" placeholder="Maximum length of form field">
+                                                      <span class="text-danger"
+                                                          *ngIf="(dataEntryFormControl.maximumLengthOfFormField.touched || submitted) && dataEntryFormControl.maximumLengthOfFormField.errors?.required">
+                                                          Maximum length of form field is required
+                                                      </span>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                      <label>Validation rules</label>
+                                                      <select class="form-control" formControlName="validationRules">
+                                                        <option value="nameWithSpaceRegex">Only alphabets, spaces and the following characters: ' - .</option>
+                                                        <option value="numberRegex">Only numbers</option>
+                                                        <option value="moneyRegex">Only monetary values (numbers with two decimal places)</option>
+                                                        <option value="nameWithSpaceAndNumbersRegex">Only alphabets, numbers, spaces and the following characters: ' - .</option>
+                                                      </select>
+                                                      <span class="text-danger"
+                                                          *ngIf="(dataEntryFormControl.validationRules.touched || submitted) && dataEntryFormControl.validationRules.errors?.required">
+                                                          Validation rules is required
+                                                      </span>
+                                                    </div>
                         </div>
-                      </div>                             
-                      
-                      <div class="form-group">
+                      </div>
+
+                      <div class="form-group" style="text-align:right">
                           <button type="submit" class="btn btn-success">Next</button>
                       </div>
                   </form>
