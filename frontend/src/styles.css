@@ -3,6 +3,8 @@
 /* ref: https://www.freecodecamp.org/news/how-to-validate-angular-reactive-forms/ */
 @import "~bootstrap/dist/css/bootstrap.min.css";
 
+@import '~ngx-toastr/toastr';
+
 .form-group label, .span_bold { font-weight:600; }
 .form-group { margin-bottom:3%;padding:3%;border:1px solid lightblue;box-shadow:2px 5px 5px #888888; }
 .row {margin-top:9%;padding-top:4%;border-top:1px solid darkgray;}
