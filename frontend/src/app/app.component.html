@@ -275,6 +275,32 @@
                                                           Field type is required
                                                       </span>
                                                     </div>
+
+
+                                                    <div class="form-group">
+                                                      <a (click)="addUiViewPageInfo()" class="btn btn-primary">Add View Page Info</a>
+                                                    </div>
+                          
+                                                    <hr />
+                          
+                                                    <table class="table table-striped">
+                                                      <tr>
+                                                        <th>#</th>
+                                                        <th>Label</th>                              
+                                                        <th>Corresponding DB field</th>
+                                                        <th>Field type</th>
+                                                        <th>Action</th>
+                                                      </tr>
+                                                      <tr  *ngFor="let item of finalJsonObject['code']['view_page_ui']['table_rows']; index as i;">  <!-- ref: https://angular.io/api/common/NgForOf -->
+                                                        <td>{{ i+1 }}</td>
+                                                        <td>{{ item.label }}</td>                   
+                                                        <td>{{ item.propertyName }}</td>                              
+                                                        <td>{{ item.dataType }}</td>                                                                              
+                                                        <td>
+                                                          <a style="cursor:pointer" (click)="removeUiViewPageInfo(i)">X</a>
+                                                        </td>
+                                                      </tr>                            
+                                                    </table>
                         </div>
                       </div>
 

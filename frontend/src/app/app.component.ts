@@ -54,6 +54,8 @@ export class AppComponent implements OnInit  {
     this.finalJsonObject['code'] = {};
     this.finalJsonObject['code']['grid_ui'] = [];    
     this.finalJsonObject['code']['grid_ui']['all_data'] = [];        
+    this.finalJsonObject['code']['view_page_ui'] = [];    
+    this.finalJsonObject['code']['view_page_ui']['table_rows'] = [];        
   }
 
   get dataEntryFormControl() {
@@ -70,6 +72,31 @@ export class AppComponent implements OnInit  {
       this.finalJsonObject['webAppSourceCodePath'] = this.dataEntryFormControl.webAppSourceCodePath;
 
     }
+  }
+
+  removeUiViewPageInfo(index: number){
+    this.finalJsonObject['code']['view_page_ui']['table_rows'].splice(index, 1);
+  }
+
+  addUiViewPageInfo(){
+    let obj : any;
+    obj = {};
+    obj['label'] = this.dataEntryFormControl.uiViewPageLabel.value;
+    obj['propertyName'] = this.dataEntryFormControl.uiViewPageLabelCorrespondingDbFieldName.value;
+    obj['dataType'] = this.dataEntryFormControl.uiViewPageFieldType.value;
+
+    if(obj['label'] == null || obj['label'] == "" ||
+    obj['propertyName'] == null || obj['propertyName'] == "" ||
+    obj['dataType'] == null || obj['dataType'] == ""){
+      this.toastr.error('Please fill up all fields', 'Info');
+      return;
+    }
+
+    this.finalJsonObject['code']['view_page_ui']['table_rows'].push(obj);
+
+    this.dataEntryFormControl.uiViewPageLabel.setValue('');
+    this.dataEntryFormControl.uiViewPageLabelCorrespondingDbFieldName.setValue('');
+    this.dataEntryFormControl.uiViewPageFieldType.setValue('');  
   }
 
   removeUiGridInfo(index: number){
