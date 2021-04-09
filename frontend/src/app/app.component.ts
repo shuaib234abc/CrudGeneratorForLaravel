@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormGroup, FormBuilder } from '@angular/forms';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
 import { AppService } from './app.service';
+
 
 @Component({
   selector: 'app-root',
@@ -17,12 +19,40 @@ export class AppComponent implements OnInit  {
   dataEntryForm!: FormGroup;
   submitted = false;
   finalJsonObject : any;
+  generateDataLinkClicked : boolean
+  downloadLinkClicked : boolean
+  downloadJsonHref : SafeUrl
+  uploadJsonFile!: File
 
   constructor(
     private service: AppService,
     private fb: FormBuilder,
-    private toastr: ToastrService
-  ) { }
+    private toastr: ToastrService,
+    private sanitizer: DomSanitizer
+  ) { 
+    this.generateDataLinkClicked = false
+    this.downloadLinkClicked = false
+    this.downloadJsonHref = ""
+  }
+
+  initFinalJsonObject(){
+    this.finalJsonObject = {};
+    this.finalJsonObject['database'] = {};
+    this.finalJsonObject['database']['table_fields'] = [];
+    this.finalJsonObject['code'] = {};
+    this.finalJsonObject['code']['grid_ui'] = []; 
+    this.finalJsonObject['code']['grid_loading_script'] = [];    
+    this.finalJsonObject['code']['grid_loading_script']['for_datatable'] = [];        
+    this.finalJsonObject['code']['grid_ui']['all_data'] = [];        
+    this.finalJsonObject['code']['grid_ui']['columns'] = [];        
+    this.finalJsonObject['code']['grid_ui']['visible_db_table_fields'] = [];                
+    this.finalJsonObject['code']['view_page_ui'] = [];    
+    this.finalJsonObject['code']['view_page_ui']['table_rows'] = [];     
+    this.finalJsonObject['code']['form_ui'] = [];       
+    this.finalJsonObject['code']['form_ui']['fields'] = [];   
+    this.finalJsonObject['code']['form_validation_script'] = [];       
+    this.finalJsonObject['code']['form_validation_script']['rules'] = [];     
+  }
 
   ngOnInit() {
     this.dataEntryForm = this.fb.group({
@@ -50,26 +80,68 @@ export class AppComponent implements OnInit  {
       validationRules: [''],
     }
     );
-    this.finalJsonObject = {};
-    this.finalJsonObject['database'] = {};
-    this.finalJsonObject['database']['table_fields'] = [];
-    this.finalJsonObject['code'] = {};
-    this.finalJsonObject['code']['grid_ui'] = []; 
-    this.finalJsonObject['code']['grid_loading_script'] = [];    
-    this.finalJsonObject['code']['grid_loading_script']['for_datatable'] = [];        
-    this.finalJsonObject['code']['grid_ui']['all_data'] = [];        
-    this.finalJsonObject['code']['grid_ui']['columns'] = [];        
-    this.finalJsonObject['code']['grid_ui']['visible_db_table_fields'] = [];                
-    this.finalJsonObject['code']['view_page_ui'] = [];    
-    this.finalJsonObject['code']['view_page_ui']['table_rows'] = [];     
-    this.finalJsonObject['code']['form_ui'] = [];       
-    this.finalJsonObject['code']['form_ui']['fields'] = [];   
-    this.finalJsonObject['code']['form_validation_script'] = [];       
-    this.finalJsonObject['code']['form_validation_script']['rules'] = [];           
+    this.initFinalJsonObject();      
   }
 
   get dataEntryFormControl() {
     return this.dataEntryForm.controls;
+  }
+
+  alterObjectAsPerBackendSpecifications(){
+    this.finalJsonObject['webAppSourceCodePath'] = this.dataEntryFormControl.webAppSourceCodePath.value;
+    this.finalJsonObject['database']['tableName'] = this.dataEntryFormControl.tableName.value;
+    this.finalJsonObject['database']['migrationClassName'] = this.dataEntryFormControl.migrationClassName.value;
+    this.finalJsonObject['database']['migrationClassName'] = this.dataEntryFormControl.migrationClassName.value + ".php";      
+    this.finalJsonObject['code']['entityNameSingular'] = this.dataEntryFormControl.entityNameSingular.value;
+    this.finalJsonObject['code']['entityNamePlural'] = this.dataEntryFormControl.entityNamePlural.value;
+    this.finalJsonObject['code']['nameOfFolderContainingViews'] = this.dataEntryFormControl.nameOfFolderContainingViews.value;
+    this.finalJsonObject['code']['selectClauseOfQueryForGrid'] = this.dataEntryFormControl.selectClauseOfQueryForGrid.value;      
+
+    this.finalJsonObject['code']['grid_ui']['columns'] = [];
+    this.finalJsonObject['code']['grid_ui']['visible_db_table_fields'] = [];
+    this.finalJsonObject['code']['grid_loading_script']['for_datatable'] = [];            
+    var arr = this.finalJsonObject['code']['grid_ui']['all_data'];
+    var _self = this;
+    arr.map(function(element: any){
+      _self.finalJsonObject['code']['grid_ui']['columns'].push(element['columnHeaderName']);
+      _self.finalJsonObject['code']['grid_ui']['visible_db_table_fields'].push(element['correspondingDbFieldName']);   
+      _self.finalJsonObject['code']['grid_loading_script']['for_datatable'].push(element['correspondingDbFieldName']);                
+    });     //ref: https://www.freecodecamp.org/news/javascript-map-how-to-use-the-js-map-function-array-method/
+
+    /////////// ////////////////////////// //////////////////////// /////////////////////////////
+
+    this.finalJsonObject['code']['form_validation_script']['rules'] = [];
+    arr = this.finalJsonObject['code']['form_ui']['fields'];
+    var _self = this;
+    arr.map(function(element: any){
+
+      let obj : any;
+      obj = {};
+      obj['field'] = "";
+      obj['ruleText'] = "";
+      
+      var required = element['required'];
+      var maxlength = element['maxlength'];
+      var regex = element['regex'];
+
+      if(required != null && required != ""){
+        obj['ruleText'] += "required: " + required + ",";
+      }
+      if(maxlength != null && maxlength != ""){
+        obj['ruleText'] += "maxlength: " + maxlength + ",";
+      }    
+      if(regex != null && regex != ""){
+        obj['ruleText'] += "regex: " + regex + ",";
+      }       
+      
+      if(obj['ruleText'] != ""){
+        obj['field'] = element['id'];
+      }
+
+      _self.finalJsonObject['code']['form_validation_script']['rules'].push(obj);
+    });     //ref: https://www.freecodecamp.org/news/javascript-map-how-to-use-the-js-map-function-array-method/
+
+    console.log(this.finalJsonObject);
   }
 
   onSubmit() {
@@ -81,56 +153,7 @@ export class AppComponent implements OnInit  {
       //this.finalJsonObject = {};
       //this.finalJsonObject['webAppSourceCodePath'] = this.dataEntryFormControl.webAppSourceCodePath;
 
-      this.finalJsonObject['webAppSourceCodePath'] = this.dataEntryFormControl.webAppSourceCodePath.value;
-      this.finalJsonObject['database']['tableName'] = this.dataEntryFormControl.tableName.value;
-      this.finalJsonObject['database']['migrationClassName'] = this.dataEntryFormControl.migrationClassName.value;
-      this.finalJsonObject['database']['migrationClassName'] = this.dataEntryFormControl.migrationClassName.value + ".php";      
-      this.finalJsonObject['code']['entityNameSingular'] = this.dataEntryFormControl.entityNameSingular.value;
-      this.finalJsonObject['code']['entityNamePlural'] = this.dataEntryFormControl.entityNamePlural.value;
-      this.finalJsonObject['code']['nameOfFolderContainingViews'] = this.dataEntryFormControl.nameOfFolderContainingViews.value;
-      this.finalJsonObject['code']['selectClauseOfQueryForGrid'] = this.dataEntryFormControl.selectClauseOfQueryForGrid.value;      
-
-      var arr = this.finalJsonObject['code']['grid_ui']['all_data'];
-      var _self = this;
-      arr.map(function(element: any){
-        _self.finalJsonObject['code']['grid_ui']['columns'].push(element['columnHeaderName']);
-        _self.finalJsonObject['code']['grid_ui']['visible_db_table_fields'].push(element['correspondingDbFieldName']);   
-        _self.finalJsonObject['code']['grid_loading_script']['for_datatable'].push(element['correspondingDbFieldName']);                
-      });     //ref: https://www.freecodecamp.org/news/javascript-map-how-to-use-the-js-map-function-array-method/
-
-      /////////// ////////////////////////// //////////////////////// /////////////////////////////
-
-      arr = this.finalJsonObject['code']['form_ui']['fields'];
-      var _self = this;
-      arr.map(function(element: any){
-
-        let obj : any;
-        obj = {};
-        obj['field'] = "";
-        obj['ruleText'] = "";
-        
-        var required = element['required'];
-        var maxlength = element['maxlength'];
-        var regex = element['regex'];
-
-        if(required != null && required != ""){
-          obj['ruleText'] += "required: " + required + ",";
-        }
-        if(maxlength != null && maxlength != ""){
-          obj['ruleText'] += "maxlength: " + maxlength + ",";
-        }    
-        if(regex != null && regex != ""){
-          obj['ruleText'] += "regex: " + regex + ",";
-        }       
-        
-        if(obj['ruleText'] != ""){
-          obj['field'] = element['id'];
-        }
-
-        _self.finalJsonObject['code']['form_validation_script']['rules'].push(obj);
-      });     //ref: https://www.freecodecamp.org/news/javascript-map-how-to-use-the-js-map-function-array-method/
-
-      console.log(this.finalJsonObject);
+      this.alterObjectAsPerBackendSpecifications();
 
       // ref: https://medium.com/techiediaries-com/send-http-post-with-angular-9-8-httpclient-by-example-61e2dfdee8a9
       this.service.sendPostRequest(this.finalJsonObject).subscribe(
@@ -270,5 +293,65 @@ export class AppComponent implements OnInit  {
     this.dataEntryFormControl.columnNullable.setValue(''); 
     
     document.getElementById("columnName")?.focus();
+  }
+
+
+  generateFile(){
+
+    this.alterObjectAsPerBackendSpecifications();    
+
+    this.generateDataLinkClicked = true
+    this.downloadLinkClicked = false
+
+    //ref: https://stackoverflow.com/questions/42360665/angular2-to-export-download-json-file
+    var theJSON = JSON.stringify(this.finalJsonObject);
+
+    console.log(this.finalJsonObject);
+    console.log(theJSON);
+
+    var uri = this.sanitizer.bypassSecurityTrustUrl("data:text/json;charset=UTF-8," + encodeURIComponent(theJSON));
+    this.downloadJsonHref = uri;
+  }
+
+  downloadFile(){
+    this.generateDataLinkClicked = false
+    this.downloadLinkClicked = false
+
+    console.log(this.finalJsonObject);
+  }
+
+  onUploadedJsonFileChanged(event: any){
+    //ref: https://stackoverflow.com/questions/54971238/upload-json-file-using-angular-6
+    this.uploadJsonFile = event.target.files[0];  
+  }
+
+  processUploadedJson(){
+    this.generateDataLinkClicked = false
+    this.downloadLinkClicked = false
+
+    //ref: https://stackoverflow.com/questions/54971238/upload-json-file-using-angular-6
+    const fileReader = new FileReader();
+    fileReader.readAsText(this.uploadJsonFile, "UTF-8");
+    fileReader.onload = () => {
+
+      var fileReadResult = fileReader.result?.toString();
+      if(fileReadResult == null || fileReadResult == undefined) fileReadResult = ""
+      var jsonData = JSON.parse(fileReadResult)
+
+      //ref: https://stackoverflow.com/questions/5873624/parse-json-string-into-a-particular-object-prototype-in-javascript
+      this.finalJsonObject = Object.assign({}, jsonData)
+
+      this.dataEntryFormControl.webAppSourceCodePath.setValue(this.finalJsonObject['webAppSourceCodePath'])
+      this.dataEntryFormControl.tableName.setValue(this.finalJsonObject['database']['tableName'])
+      this.dataEntryFormControl.migrationClassName.setValue(this.finalJsonObject['database']['migrationClassName'])
+      this.dataEntryFormControl.entityNameSingular.setValue(this.finalJsonObject['code']['entityNameSingular'])
+      this.dataEntryFormControl.entityNamePlural.setValue(this.finalJsonObject['code']['entityNamePlural'])
+      this.dataEntryFormControl.nameOfFolderContainingViews.setValue(this.finalJsonObject['code']['nameOfFolderContainingViews'])
+      this.dataEntryFormControl.selectClauseOfQueryForGrid.setValue(this.finalJsonObject['code']['selectClauseOfQueryForGrid'])
+
+    }
+    fileReader.onerror = (error) => {
+      console.log(error);
+    }
   }
 }

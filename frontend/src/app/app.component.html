@@ -360,7 +360,7 @@
                                                     </div>
 
 
-                                                    <div class="form-group">
+                                                    <div class="form-group" [hidden]="dataEntryFormControl.formFieldType.value == 'file' || dataEntryFormControl.formFieldType.value == 'number'">
                                                       <label>Maximum length of form field</label>
                                                       <input tabindex="24" type="text" class="form-control" formControlName="maximumLengthOfFormField" id="maximumLengthOfFormField" placeholder="Maximum length of form field">
                                                       <span class="text-danger"
@@ -369,7 +369,7 @@
                                                       </span>
                                                     </div>
 
-                                                    <div class="form-group">
+                                                    <div class="form-group" [hidden]="dataEntryFormControl.formFieldType.value == 'file'">
                                                       <label>Validation rules</label>
                                                       <select tabindex="25" class="form-control" formControlName="validationRules" id="validationRules">
                                                         <option value="nameWithSpaceRegex">Only alphabets, spaces and the following characters: ' - .</option>
@@ -419,6 +419,28 @@
                       <div class="form-group" style="text-align:right">
                           <input tabindex="27" type="submit" class="btn btn-success" value="Next" />
                       </div>
+
+                      <div [hidden]="generateDataLinkClicked == true && downloadLinkClicked == false" style="padding-top:5%">
+                        You can save the data entered in the form in a downloadable file, and use it later on.
+                        <br />
+                        To save the data, click the link below
+                        <br />
+                        <a (click)="generateFile()" class="btn btn-success">Generate file</a>
+                      </div>
+        
+                      <div [hidden]="generateDataLinkClicked == false && downloadLinkClicked == false" style="padding-top:5%">
+                          <a (click)="downloadFile()" class="btn btn-success" [href]="downloadJsonHref" download="data_as_json.json">Download data</a>
+                      </div>
+                      
+                      <div style="padding-top:5%">
+                        If you aleady have a previously downloaded file, upload it to automatically fill up the form.
+                        <br />
+                        
+                        <!-- ref: https://stackoverflow.com/questions/54971238/upload-json-file-using-angular-6 -->
+                        <input type="file" id="uploadedJson" (change)="onUploadedJsonFileChanged($event)" />
+                        <a (click)="processUploadedJson()" class="btn btn-success">Next</a>
+                      </div>
+
                   </form>
               </div>
           </div>

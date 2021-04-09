@@ -24,5 +24,7 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 4. Working with HTTP POST requests in Angular
     https://angular.io/guide/http
     https://medium.com/techiediaries-com/send-http-post-with-angular-9-8-httpclient-by-example-61e2dfdee8a9
-    
+
+5. CORS requests in Flask
+    https://flask-cors.readthedocs.io/en/latest/
 
