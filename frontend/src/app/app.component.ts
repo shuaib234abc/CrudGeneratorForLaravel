@@ -35,6 +35,16 @@ export class AppComponent implements OnInit  {
     this.downloadJsonHref = ""
   }
 
+  // this function has been taken from: https://stackoverflow.com/questions/196972/convert-string-to-title-case-with-javascript?page=1&tab=votes#tab-top
+  toTitleCase(str: string) {
+    return str.replace(
+      /\w\S*/g,
+      function(txt) {
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+      }
+    );
+  }
+
   initFinalJsonObject(){
     this.finalJsonObject = {};
     this.finalJsonObject['database'] = {};
@@ -66,7 +76,7 @@ export class AppComponent implements OnInit  {
       entityNameSingular: ['', Validators.required],
       entityNamePlural: ['', Validators.required],
       nameOfFolderContainingViews: ['', Validators.required],
-      selectClauseOfQueryForGrid: ['', Validators.required],
+      selectClauseOfQueryForGrid: [''],
       columnHeaderName: [''],
       correspondingDbFieldName: [''],
       uiViewPageLabel: [''],
@@ -88,30 +98,23 @@ export class AppComponent implements OnInit  {
   }
 
   alterObjectAsPerBackendSpecifications(){
-    this.finalJsonObject['webAppSourceCodePath'] = this.dataEntryFormControl.webAppSourceCodePath.value;
-    this.finalJsonObject['database']['tableName'] = this.dataEntryFormControl.tableName.value;
-    this.finalJsonObject['database']['migrationClassName'] = this.dataEntryFormControl.migrationClassName.value;
-    this.finalJsonObject['database']['migrationClassName'] = this.dataEntryFormControl.migrationClassName.value + ".php";      
+    this.finalJsonObject['web_app_source_code_path'] = this.dataEntryFormControl.webAppSourceCodePath.value;
+    this.finalJsonObject['database']['table_name'] = this.dataEntryFormControl.tableName.value;
+    this.finalJsonObject['database']['migration_class_name'] = "Create" + this.toTitleCase( this.finalJsonObject['database']['table_name'] ) + "Table";
+    this.finalJsonObject['database']['migration_file_name'] = this.finalJsonObject['database']['migration_class_name'] + ".php";      
     this.finalJsonObject['code']['entityNameSingular'] = this.dataEntryFormControl.entityNameSingular.value;
     this.finalJsonObject['code']['entityNamePlural'] = this.dataEntryFormControl.entityNamePlural.value;
-    this.finalJsonObject['code']['nameOfFolderContainingViews'] = this.dataEntryFormControl.nameOfFolderContainingViews.value;
-    this.finalJsonObject['code']['selectClauseOfQueryForGrid'] = this.dataEntryFormControl.selectClauseOfQueryForGrid.value;      
-
-    this.finalJsonObject['code']['grid_ui']['columns'] = [];
-    this.finalJsonObject['code']['grid_ui']['visible_db_table_fields'] = [];
-    this.finalJsonObject['code']['grid_loading_script']['for_datatable'] = [];            
-    var arr = this.finalJsonObject['code']['grid_ui']['all_data'];
-    var _self = this;
-    arr.map(function(element: any){
-      _self.finalJsonObject['code']['grid_ui']['columns'].push(element['columnHeaderName']);
-      _self.finalJsonObject['code']['grid_ui']['visible_db_table_fields'].push(element['correspondingDbFieldName']);   
-      _self.finalJsonObject['code']['grid_loading_script']['for_datatable'].push(element['correspondingDbFieldName']);                
-    });     //ref: https://www.freecodecamp.org/news/javascript-map-how-to-use-the-js-map-function-array-method/
+    this.finalJsonObject['code']['nameOfFolderContainingViews'] = this.finalJsonObject['database']['table_name'].toLowerCase();             
 
     /////////// ////////////////////////// //////////////////////// /////////////////////////////
 
+    this.finalJsonObject['code']['selectClauseOfQueryForGrid'] = "";
+    this.finalJsonObject['code']['selectClauseOfQueryForGrid'] += "select('id', ";  
+    this.finalJsonObject['code']['grid_ui']['columns'] = [];
+    this.finalJsonObject['code']['grid_ui']['visible_db_table_fields'] = [];
+    this.finalJsonObject['code']['grid_loading_script']['for_datatable'] = [];
     this.finalJsonObject['code']['form_validation_script']['rules'] = [];
-    arr = this.finalJsonObject['code']['form_ui']['fields'];
+    var arr = this.finalJsonObject['code']['form_ui']['fields'];
     var _self = this;
     arr.map(function(element: any){
 
@@ -123,6 +126,7 @@ export class AppComponent implements OnInit  {
       var required = element['required'];
       var maxlength = element['maxlength'];
       var regex = element['regex'];
+      var type = element['type'];
 
       if(required != null && required != ""){
         obj['ruleText'] += "required: " + required + ",";
@@ -139,7 +143,45 @@ export class AppComponent implements OnInit  {
       }
 
       _self.finalJsonObject['code']['form_validation_script']['rules'].push(obj);
+
+      /////// ///////////// ///////////// /////////////
+
+      var dataTypeForGridUi = "string"
+
+      if(element['type'] != "file"){
+        _self.finalJsonObject['code']['grid_loading_script']['for_datatable'].push(element['id']);     
+        _self.finalJsonObject['code']['grid_ui']['visible_db_table_fields'].push(element['id']);   
+        _self.finalJsonObject['code']['grid_ui']['columns'].push(element['label']);      
+        _self.finalJsonObject['code']['selectClauseOfQueryForGrid'] += "'"+element['id']+"',";                    
+      }
+      else{
+        dataTypeForGridUi = "image"
+      }
+
+      obj = {}
+      obj['label'] = element['label'];
+      obj['property_name'] = element['id'];
+      obj['dataType'] = dataTypeForGridUi;            
+      _self.finalJsonObject['code']['view_page_ui']['table_rows'].push(obj)
+
+      ////////// /////////////// //////////////// //////////////// ////////////////////
+      obj = {}
+      obj['name'] = element['id'];
+      if(required != null && required != ""){
+        if(required == "true") obj['nullable'] = "false";
+        else obj["nullable"] = "true";
+      }
+      else obj["nullable"] = "true";
+      if(maxlength != null && maxlength != ""){
+        obj['length'] = maxlength;
+      }    
+      obj['dataType'] = "string";
+      _self.finalJsonObject['database']['table_fields'].push(obj);
+
     });     //ref: https://www.freecodecamp.org/news/javascript-map-how-to-use-the-js-map-function-array-method/
+
+    //ref: https://stackoverflow.com/questions/36630230/replace-last-character-of-string-using-javascript/36630251
+    this.finalJsonObject['code']['selectClauseOfQueryForGrid'] = this.finalJsonObject['code']['selectClauseOfQueryForGrid'].replace(/.$/," )");              
 
     console.log(this.finalJsonObject);
   }
@@ -207,94 +249,7 @@ export class AppComponent implements OnInit  {
     this.dataEntryFormControl.validationRules.setValue(''); 
 
     document.getElementById("formFieldLabel")?.focus();
-  }
-
-  removeUiViewPageInfo(index: number){
-    this.finalJsonObject['code']['view_page_ui']['table_rows'].splice(index, 1);
-  }
-
-  addUiViewPageInfo(){
-    let obj : any;
-    obj = {};
-    obj['label'] = this.dataEntryFormControl.uiViewPageLabel.value;
-    obj['propertyName'] = this.dataEntryFormControl.uiViewPageLabelCorrespondingDbFieldName.value;
-    obj['dataType'] = this.dataEntryFormControl.uiViewPageFieldType.value;
-
-    if(obj['label'] == null || obj['label'] == "" ||
-    obj['propertyName'] == null || obj['propertyName'] == "" ||
-    obj['dataType'] == null || obj['dataType'] == ""){
-      this.toastr.error('Please fill up all fields', 'Info');
-      return;
-    }
-
-    this.finalJsonObject['code']['view_page_ui']['table_rows'].push(obj);
-
-    this.dataEntryFormControl.uiViewPageLabel.setValue('');
-    this.dataEntryFormControl.uiViewPageLabelCorrespondingDbFieldName.setValue('');
-    this.dataEntryFormControl.uiViewPageFieldType.setValue('');  
-
-    document.getElementById("uiViewPageLabel")?.focus();
-  }
-
-  removeUiGridInfo(index: number){
-    this.finalJsonObject['code']['grid_ui']['all_data'].splice(index, 1);
-  }
-
-  addUiGridInfo(){
-    let obj : any;
-    obj = {};
-    obj['columnHeaderName'] = this.dataEntryFormControl.columnHeaderName.value;
-    obj['correspondingDbFieldName'] = this.dataEntryFormControl.correspondingDbFieldName.value;
-
-    if(obj['columnHeaderName'] == null || obj['columnHeaderName'] == "" ||
-    obj['correspondingDbFieldName'] == null || obj['correspondingDbFieldName'] == ""){
-      this.toastr.error('Please fill up all fields', 'Info');
-      return;
-    }
-
-    this.finalJsonObject['code']['grid_ui']['all_data'].push(obj);
-
-    this.dataEntryFormControl.columnHeaderName.setValue('');
-    this.dataEntryFormControl.correspondingDbFieldName.setValue('');  
-
-    document.getElementById("columnHeaderName")?.focus();
-  }
-
-  removeColumn(index: number){
-    this.finalJsonObject['database']['table_fields'].splice(index, 1);
-  }
-
-  addColumn(){
-    let obj : any;
-    obj = {};
-    obj['name'] = this.dataEntryFormControl.columnName.value;
-    obj['dataType'] = this.dataEntryFormControl.columnType.value;
-    obj['length'] = this.dataEntryFormControl.columnLength.value;
-    obj['nullable'] = this.dataEntryFormControl.columnNullable.value;
-
-    if(obj['dataType'] == "integer" || obj['dataType'] == "bigInteger" ||
-    obj['dataType'] == "double" || obj['dataType'] == "binary"){
-      obj['length'] = 1;
-    }
-
-    if(obj['name'] == null || obj['name'] == "" ||
-    obj['dataType'] == null || obj['dataType'] == "" ||
-    obj['length'] == null || obj['length'] == "" ||
-    obj['nullable'] == null || obj['nullable'] == "" ){
-      this.toastr.error('Please fill up all fields', 'Info');
-      return;
-    }
-
-    this.finalJsonObject['database']['table_fields'].push(obj);
-
-    this.dataEntryFormControl.columnName.setValue('');
-    this.dataEntryFormControl.columnType.setValue('');
-    this.dataEntryFormControl.columnLength.setValue('');        
-    this.dataEntryFormControl.columnNullable.setValue(''); 
-    
-    document.getElementById("columnName")?.focus();
-  }
-
+  }  
 
   generateFile(){
 
