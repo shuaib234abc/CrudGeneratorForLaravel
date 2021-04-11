@@ -1,3 +1,5 @@
 /backend/output_part_2
 /backend/__pycache__
 /backend/output_part_1
+!backend/output_part_1/readme.txt
+!backend/output_part_2/readme.txt
