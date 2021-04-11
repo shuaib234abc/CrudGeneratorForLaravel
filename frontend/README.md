@@ -18,7 +18,7 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 2. Getting started with Python Flask framework
     https://flask.palletsprojects.com/en/1.1.x/quickstart/#a-minimal-application
 
-3. Working with HTTP POST requests in Flash
+3. Working with HTTP POST requests in Flask
     https://flask.palletsprojects.com/en/1.1.x/quickstart/#http-methods
 
 4. Working with HTTP POST requests in Angular

@@ -68,23 +68,12 @@ export class AppComponent implements OnInit  {
     this.dataEntryForm = this.fb.group({
       webAppSourceCodePath: [''],
       tableName: ['', Validators.required],
-      migrationClassName: ['', Validators.required],
-      columnName: [''],
-      columnType: [''],
-      columnLength: [''],
-      columnNullable: [''],
       entityNameSingular: ['', Validators.required],
       entityNamePlural: ['', Validators.required],
-      nameOfFolderContainingViews: ['', Validators.required],
-      selectClauseOfQueryForGrid: [''],
-      columnHeaderName: [''],
-      correspondingDbFieldName: [''],
-      uiViewPageLabel: [''],
-      uiViewPageLabelCorrespondingDbFieldName: [''],
-      uiViewPageFieldType: [''],
       formFieldLabel: [''],
       formFieldType: [''],
       dbColumnForThisFormField: [''],
+      dbColumnTypeForThisFormField: [''],      
       formFieldIsMandatory: [''],
       maximumLengthOfFormField: [''],
       validationRules: [''],
@@ -175,7 +164,7 @@ export class AppComponent implements OnInit  {
       if(maxlength != null && maxlength != ""){
         obj['length'] = maxlength;
       }    
-      obj['dataType'] = "string";
+      obj['dataType'] = element['id_type'];
       _self.finalJsonObject['database']['table_fields'].push(obj);
 
     });     //ref: https://www.freecodecamp.org/news/javascript-map-how-to-use-the-js-map-function-array-method/
@@ -218,6 +207,7 @@ export class AppComponent implements OnInit  {
     obj['label'] = this.dataEntryFormControl.formFieldLabel.value;
     obj['type'] = this.dataEntryFormControl.formFieldType.value;
     obj['id'] = this.dataEntryFormControl.dbColumnForThisFormField.value;
+    obj['id_type'] = this.dataEntryFormControl.dbColumnTypeForThisFormField.value;
     obj['required'] = this.dataEntryFormControl.formFieldIsMandatory.value;
     obj['maxlength'] = this.dataEntryFormControl.maximumLengthOfFormField.value;            
     obj['regex'] = this.dataEntryFormControl.validationRules.value;
@@ -231,9 +221,13 @@ export class AppComponent implements OnInit  {
       return;
     }
     if(obj['id'] == null || obj['id'] == ""){
-      this.toastr.error('Please fill up DB column for this form field', 'Info');
+      this.toastr.error('Please fill up DB column name for this form field', 'Info');
       return;
     }
+    if(obj['id_type'] == null || obj['id_type'] == ""){
+      this.toastr.error('Please fill up DB column type for this form field', 'Info');
+      return;
+    }    
     if(obj['required'] == null || obj['required'] == ""){
       this.toastr.error('Please fill up Form field is mandatory', 'Info');
       return;
@@ -244,6 +238,7 @@ export class AppComponent implements OnInit  {
     this.dataEntryFormControl.formFieldLabel.setValue('');
     this.dataEntryFormControl.formFieldType.setValue('');
     this.dataEntryFormControl.dbColumnForThisFormField.setValue('');
+    this.dataEntryFormControl.dbColumnTypeForThisFormField.setValue('');    
     this.dataEntryFormControl.formFieldIsMandatory.setValue('');
     this.dataEntryFormControl.maximumLengthOfFormField.setValue(''); 
     this.dataEntryFormControl.validationRules.setValue(''); 

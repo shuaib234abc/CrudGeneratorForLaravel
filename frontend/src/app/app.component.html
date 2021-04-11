@@ -69,7 +69,7 @@
                         <div class="col-md-7">
                                                     <div class="form-group">
                                                       <label>Form field label</label>
-                                                      <input tabindex="20" type="text" class="form-control" formControlName="formFieldLabel" id="formFieldLabel" placeholder="Form field label">
+                                                      <input tabindex="11" type="text" class="form-control" formControlName="formFieldLabel" id="formFieldLabel" placeholder="Form field label">
                                                       <span class="text-danger"
                                                           *ngIf="(dataEntryFormControl.formFieldLabel.touched || submitted) && dataEntryFormControl.formFieldLabel.errors?.required">
                                                           Form field label is required
@@ -78,7 +78,7 @@
 
                                                     <div class="form-group">
                                                       <label>Form field type</label>
-                                                      <select tabindex="21" class="form-control" formControlName="formFieldType" id="formFieldType">
+                                                      <select tabindex="12" class="form-control" formControlName="formFieldType" id="formFieldType">
                                                         <option value="text">text</option>
                                                         <option value="textarea">textarea</option>
                                                         <option value="file">file</option>
@@ -93,11 +93,28 @@
 
 
                                                     <div class="form-group">
-                                                      <label>DB column for this form field</label>
-                                                      <input tabindex="22" type="text" class="form-control" formControlName="dbColumnForThisFormField" id="dbColumnForThisFormField" placeholder="DB column for this form field">
+                                                      <label>DB column name for this form field</label>
+                                                      <input tabindex="13" type="text" class="form-control" formControlName="dbColumnForThisFormField" id="dbColumnForThisFormField" placeholder="DB column for this form field">
                                                       <span class="text-danger"
                                                           *ngIf="(dataEntryFormControl.dbColumnForThisFormField.touched || submitted) && dataEntryFormControl.dbColumnForThisFormField.errors?.required">
-                                                          DB column for this form field is required
+                                                          DB column name for this form field is required
+                                                      </span>
+                                                    </div>
+
+
+                                                    <div class="form-group">
+                                                      <label>DB column type for this form field</label>
+                                                      <select tabindex="14" class="form-control" formControlName="dbColumnTypeForThisFormField" id="dbColumnTypeForThisFormField">
+                                                        <option value="string">string</option>
+                                                        <option value="integer">integer</option>
+                                                        <option value="double">double</option>
+                                                        <option value="text">long text</option>
+                                                        <option value="binary">image / file</option>
+                                                        <option value="bigInteger">big integer</option>
+                                                      </select>
+                                                      <span class="text-danger"
+                                                          *ngIf="(dataEntryFormControl.dbColumnTypeForThisFormField.touched || submitted) && dataEntryFormControl.dbColumnTypeForThisFormField.errors?.required">
+                                                          DB column type for this form field is required
                                                       </span>
                                                     </div>
 
@@ -149,7 +166,8 @@
                                                         <th>#</th>
                                                         <th>Label</th>            
                                                         <th>Type</th>            
-                                                        <th>Corresponding DB field</th>                                                                                                                                              
+                                                        <th>Corresponding DB field</th>
+                                                        <th>DB field type</th>                                                                                                                                              
                                                         <th>Mandatory?</th>
                                                         <th>Maximum length</th>                                                        
                                                         <th>Validation rules</th>
@@ -160,6 +178,7 @@
                                                         <td>{{ item.label }}</td>
                                                         <td>{{ item.type }}</td>
                                                         <td>{{ item.id }}</td>
+                                                        <td>{{ item.id_type }}</td>
                                                         <td>{{ item.required }}</td>
                                                         <td>{{ item.maxlength }}</td>
                                                         <td>{{ item.regex }}</td>                                                                              
