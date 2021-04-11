@@ -190,7 +190,7 @@
                                                         <th>Validation rules</th>
                                                         <th>Action</th>
                                                       </tr>
-                                                      <tr  *ngFor="let item of finalJsonObject['code']['form_ui']['fields']; index as i;">  <!-- ref: https://angular.io/api/common/NgForOf -->
+                                                      <tr  *ngFor="let item of finalJsonObject['ui_form_fields']; index as i;">  <!-- ref: https://angular.io/api/common/NgForOf -->
                                                         <td>{{ i+1 }}</td>
                                                         <td>{{ item.label }}</td>
                                                         <td>{{ item.type }}</td>

@@ -50,18 +50,14 @@ export class AppComponent implements OnInit  {
     this.finalJsonObject['database'] = {};
     this.finalJsonObject['database']['table_fields'] = [];
     this.finalJsonObject['code'] = {};
-    this.finalJsonObject['code']['grid_ui'] = []; 
-    this.finalJsonObject['code']['grid_loading_script'] = [];    
-    this.finalJsonObject['code']['grid_loading_script']['for_datatable'] = [];        
-    this.finalJsonObject['code']['grid_ui']['all_data'] = [];        
-    this.finalJsonObject['code']['grid_ui']['columns'] = [];        
-    this.finalJsonObject['code']['grid_ui']['visible_db_table_fields'] = [];                
-    this.finalJsonObject['code']['view_page_ui'] = [];    
-    this.finalJsonObject['code']['view_page_ui']['table_rows'] = [];     
-    this.finalJsonObject['code']['form_ui'] = [];       
-    this.finalJsonObject['code']['form_ui']['fields'] = [];   
-    this.finalJsonObject['code']['form_validation_script'] = [];       
-    this.finalJsonObject['code']['form_validation_script']['rules'] = [];     
+    this.finalJsonObject['ui_datatable_cols'] = [];        
+    this.finalJsonObject['ui_data_grid'] = {};     
+    this.finalJsonObject['ui_data_grid']['all_data'] = [];        
+    this.finalJsonObject['ui_data_grid']['columns'] = [];        
+    this.finalJsonObject['ui_data_grid']['visible_db_table_fields'] = [];                
+    this.finalJsonObject['ui_view_page_fields'] = [];     
+    this.finalJsonObject['ui_form_fields'] = [];          
+    this.finalJsonObject['ui_form_validation_rules'] = [];     
   }
 
   ngOnInit() {
@@ -101,11 +97,11 @@ export class AppComponent implements OnInit  {
 
     this.finalJsonObject['code']['selectClauseOfQueryForGrid'] = "";
     this.finalJsonObject['code']['selectClauseOfQueryForGrid'] += "select('id', ";  
-    this.finalJsonObject['code']['grid_ui']['columns'] = [];
-    this.finalJsonObject['code']['grid_ui']['visible_db_table_fields'] = [];
-    this.finalJsonObject['code']['grid_loading_script']['for_datatable'] = [];
-    this.finalJsonObject['code']['form_validation_script']['rules'] = [];
-    var arr = this.finalJsonObject['code']['form_ui']['fields'];
+    this.finalJsonObject['ui_data_grid']['columns'] = [];
+    this.finalJsonObject['ui_data_grid']['visible_db_table_fields'] = [];
+    this.finalJsonObject['ui_datatable_cols'] = [];
+    this.finalJsonObject['ui_form_validation_rules'] = [];
+    var arr = this.finalJsonObject['ui_form_fields'];
     var _self = this;
     arr.map(function(element: any){
 
@@ -133,16 +129,16 @@ export class AppComponent implements OnInit  {
         obj['field'] = element['id'];
       }
 
-      _self.finalJsonObject['code']['form_validation_script']['rules'].push(obj);
+      _self.finalJsonObject['ui_form_validation_rules'].push(obj);
 
       /////// ///////////// ///////////// /////////////
 
       var dataTypeForGridUi = "string"
 
       if(element['type'] != "file"){
-        _self.finalJsonObject['code']['grid_loading_script']['for_datatable'].push(element['id']);     
-        _self.finalJsonObject['code']['grid_ui']['visible_db_table_fields'].push(element['id']);   
-        _self.finalJsonObject['code']['grid_ui']['columns'].push(element['label']);      
+        _self.finalJsonObject['ui_datatable_cols'].push(element['id']);     
+        _self.finalJsonObject['ui_data_grid']['visible_db_table_fields'].push(element['id']);   
+        _self.finalJsonObject['ui_data_grid']['columns'].push(element['label']);      
         _self.finalJsonObject['code']['selectClauseOfQueryForGrid'] += "'"+element['id']+"',";                    
       }
       else{
@@ -153,7 +149,7 @@ export class AppComponent implements OnInit  {
       obj['label'] = element['label'];
       obj['property_name'] = element['id'];
       obj['dataType'] = dataTypeForGridUi;            
-      _self.finalJsonObject['code']['view_page_ui']['table_rows'].push(obj)
+      _self.finalJsonObject['ui_view_page_fields'].push(obj)
 
       ////////// /////////////// //////////////// //////////////// ////////////////////
       obj = {}
@@ -197,7 +193,7 @@ export class AppComponent implements OnInit  {
   }
 
   removeFormDefinition(index: number){
-    this.finalJsonObject['code']['form_ui']['fields'].splice(index, 1);
+    this.finalJsonObject['ui_form_fields'].splice(index, 1);
   }
 
   addFormDefinition(){
@@ -232,7 +228,7 @@ export class AppComponent implements OnInit  {
       return;
     }            
 
-    this.finalJsonObject['code']['form_ui']['fields'].push(obj);
+    this.finalJsonObject['ui_form_fields'].push(obj);
 
     this.dataEntryFormControl.formFieldLabel.setValue('');
     this.dataEntryFormControl.formFieldType.setValue('');
