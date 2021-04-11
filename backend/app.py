@@ -663,7 +663,7 @@ def move_output_files_to_source_code_location():
         try:
         #{
             newpath = web_app_source_code_path + "\\" + "resources\\views\\" + all_raw_data['code']['entityNamePlural'].lower()
-            if not os.path.exists(newpath):
+            if not os.path.exists(newpath):         # ref: https://stackoverflow.com/questions/1274405/how-to-create-new-folder
                 os.makedirs(newpath)
             newpath = web_app_source_code_path + "\\" + "public\\custom"
             if not os.path.exists(newpath):
