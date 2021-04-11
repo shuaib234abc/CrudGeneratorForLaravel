@@ -28,3 +28,6 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 5. CORS requests in Flask
     https://flask-cors.readthedocs.io/en/latest/
 
+6. Regular expressions have been heavilly used in this project. I have learnt a lot about regular expressions from
+    https://regex101.com/    
+

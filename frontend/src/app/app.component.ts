@@ -66,6 +66,7 @@ export class AppComponent implements OnInit  {
 
   ngOnInit() {
     this.dataEntryForm = this.fb.group({
+      operatingSystem: ['', Validators.required],
       webAppSourceCodePath: [''],
       tableName: ['', Validators.required],
       entityNameSingular: ['', Validators.required],
@@ -88,6 +89,7 @@ export class AppComponent implements OnInit  {
 
   alterObjectAsPerBackendSpecifications(){
     this.finalJsonObject['web_app_source_code_path'] = this.dataEntryFormControl.webAppSourceCodePath.value;
+    this.finalJsonObject['operating_system'] = this.dataEntryFormControl.operatingSystem.value;    
     this.finalJsonObject['database']['table_name'] = this.dataEntryFormControl.tableName.value;
     this.finalJsonObject['database']['migration_class_name'] = "Create" + this.toTitleCase( this.finalJsonObject['database']['table_name'] ) + "Table";
     this.finalJsonObject['database']['migration_file_name'] = this.finalJsonObject['database']['migration_class_name'] + ".php";      
@@ -180,9 +182,6 @@ export class AppComponent implements OnInit  {
     if (this.dataEntryForm.valid) {
       alert('Form Submitted succesfully!!!\n Check the values in browser console.');
       //console.table(this.dataEntryForm.value);
-
-      //this.finalJsonObject = {};
-      //this.finalJsonObject['webAppSourceCodePath'] = this.dataEntryFormControl.webAppSourceCodePath;
 
       this.alterObjectAsPerBackendSpecifications();
 
@@ -291,13 +290,13 @@ export class AppComponent implements OnInit  {
       //ref: https://stackoverflow.com/questions/5873624/parse-json-string-into-a-particular-object-prototype-in-javascript
       this.finalJsonObject = Object.assign({}, jsonData)
 
-      this.dataEntryFormControl.webAppSourceCodePath.setValue(this.finalJsonObject['webAppSourceCodePath'])
-      this.dataEntryFormControl.tableName.setValue(this.finalJsonObject['database']['tableName'])
-      this.dataEntryFormControl.migrationClassName.setValue(this.finalJsonObject['database']['migrationClassName'])
+      this.dataEntryFormControl.webAppSourceCodePath.setValue(this.finalJsonObject['web_app_source_code_path'])
+      this.dataEntryFormControl.operatingSystem.setValue(this.finalJsonObject['operating_system'])      
+      this.dataEntryFormControl.tableName.setValue(this.finalJsonObject['database']['table_name'])
+      this.dataEntryFormControl.migrationClassName.setValue(this.finalJsonObject['database']['migration_class_name'])
       this.dataEntryFormControl.entityNameSingular.setValue(this.finalJsonObject['code']['entityNameSingular'])
       this.dataEntryFormControl.entityNamePlural.setValue(this.finalJsonObject['code']['entityNamePlural'])
       this.dataEntryFormControl.nameOfFolderContainingViews.setValue(this.finalJsonObject['code']['nameOfFolderContainingViews'])
-      this.dataEntryFormControl.selectClauseOfQueryForGrid.setValue(this.finalJsonObject['code']['selectClauseOfQueryForGrid'])
 
     }
     fileReader.onerror = (error) => {
