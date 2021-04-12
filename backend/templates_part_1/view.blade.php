@@ -9,7 +9,7 @@ credits: https://www.techiediaries.com/laravel-8-crud-tutorial/
     <div class="row">
         <div class="col-lg-12 col-sm-12">
             <div class="float-right" style="margin-bottom:4%">
-                <a href="{{ url('/menus') }}" title="Back"><button class="btn btn-info btn-sm">Back</button></a>
+                <a href="{{ url('/menus') }}" title="Back"><button class="btn btn-info">Back</button></a>
             </div>
 
             <table class="table table-bordered">

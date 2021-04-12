@@ -11,7 +11,7 @@ https://www.tutsmake.com/laravel-8-crud-example-tutorial/
 <div class="row">
   <div class="col-sm-12">
     <div class="float-right" style="margin-bottom:4%">
-        <a href="{{ url('/menus') }}" title="Back"><button class="btn btn-info btn-sm">Back</button></a>
+        <a href="{{ url('/menus') }}" title="Back"><button class="btn btn-info">Back</button></a>
     </div>
   </div>
 </div>
@@ -25,7 +25,7 @@ https://www.tutsmake.com/laravel-8-crud-example-tutorial/
 
 --PLACEHOLDER_FORM_FIELDS--
               
-              <button type="submit" class="btn btn-primary ml-3">Submit</button>
+              <button type="submit" class="btn btn-primary">Submit</button>
         </div>
     </form>
 

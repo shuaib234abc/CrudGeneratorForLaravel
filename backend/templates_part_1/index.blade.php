@@ -22,7 +22,7 @@
     <!-- credits: https://www.tutsmake.com/laravel-8-crud-example-tutorial/ -->
 
     <div class="float-right" style="margin-bottom:4%">
-      <a href="{{ url('/menus/show-add-new-form') }}" title="Add new"><button class="btn btn-info btn-sm">Add new</button></a>
+      <a href="{{ url('/menus/show-add-new-form') }}" title="Add new"><button class="btn btn-info">Add new</button></a>
     </div>
 
     <div id="gridContainer">

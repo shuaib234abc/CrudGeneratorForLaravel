@@ -32,7 +32,7 @@ __FIELDS__
                         {
                             "targets": -1,
                             "data": null,
-                            "defaultContent": "<a id='gridInlineViewLink' title=\"View\"><button id='gridInlineViewBtn' class=\"btn btn-success btn-sm\">View</button></a>&nbsp;<a id='gridInlineEditLink' title=\"Edit\"><button id='gridInlineEditBtn' class=\"btn btn-primary btn-sm\">Edit</button></a>&nbsp;<a id='gridInlineDeleteLink' title=\"Delete\"><button id='gridInlineDeleteBtn' class=\"btn btn-danger btn-sm\">Delete</button></a>"
+                            "defaultContent": "<a id='gridInlineViewLink' title=\"View\"><button id='gridInlineViewBtn' class=\"btn btn-success\">View</button></a>&nbsp;<a id='gridInlineEditLink' title=\"Edit\"><button id='gridInlineEditBtn' class=\"btn btn-primary\">Edit</button></a>&nbsp;<a id='gridInlineDeleteLink' title=\"Delete\"><button id='gridInlineDeleteBtn' class=\"btn btn-danger\">Delete</button></a>"
                         }
                     ],
                     'order': [[1, 'asc']],
