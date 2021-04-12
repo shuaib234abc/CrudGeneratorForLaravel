@@ -1,0 +1,14 @@
+This application uses some other 3rd party libraries, as listed below:
+We have been inspired to tablulate third party softwares in this way from Dolibarr (https://github.com/Dolibarr/dolibarr)
+
+
+----------------------------------------------------------------------------------------------------------------------------------------
+SL  Library         Library Link                                            Version             License           License Link
+----------------------------------------------------------------------------------------------------------------------------------------
+1   CoreUI          https://coreui.io                                       4.0.0-alpha.2       MIT               https://coreui.io/license
+2   jQuery          https://jquery.com                                      3.5.1               MIT               https://github.com/jquery/jquery/blob/master/LICENSE.txt
+3   jQuery          https://github.com/jquery-validation/jquery-validation  1.19.2              MIT               https://github.com/jquery-validation/jquery-validation/blob/master/LICENSE.md
+    validation
+4   jQuery          https://datatables.net/                                 1.10.22             MIT               https://datatables.net/license/mit
+    datatables
+5.  Angular 11      https://angular.io                                      11.2.5              MIT

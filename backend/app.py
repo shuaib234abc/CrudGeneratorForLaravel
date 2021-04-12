@@ -731,7 +731,7 @@ def main():
     change_main_controller()
     change_blade_file_for_view()
     change_web_php_file_snippet()
-    #move_output_files_to_source_code_location()
+    move_output_files_to_source_code_location()
 
     return_object = {}                                      # ref: https://www.w3schools.com/python/python_dictionaries.asp
     return_object["message"] = "Operation successful. Please check your target application and run the scaffolded code."

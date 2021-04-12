@@ -8,6 +8,18 @@ https://www.techiediaries.com/laravel-8-crud-tutorial/
 https://www.tutsmake.com/laravel-8-crud-example-tutorial/
 -->
 
+<!--
+The UI theme for this application has been taken from CoreUI (https://coreui.io) ... below are some
+license and copyright related information regarding CoreUI
+
+* CoreUI - Free Bootstrap Admin Template
+* @version v4.0.0-alpha.2
+* @link https://coreui.io
+* Copyright (c) 2021 creativeLabs Łukasz Holeczek
+* Licensed under MIT (https://coreui.io/license)
+
+-->
+
 <div class="row">
   <div class="col-sm-12">
     <div class="float-right" style="margin-bottom:4%">
