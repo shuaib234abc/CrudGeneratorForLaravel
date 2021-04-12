@@ -173,18 +173,30 @@ export class AppComponent implements OnInit  {
     console.log(this.finalJsonObject);
   }
 
+  reset(){
+
+    this.dataEntryFormControl.webAppSourceCodePath.setValue('')
+    this.dataEntryFormControl.operatingSystem.setValue('')      
+    this.dataEntryFormControl.tableName.setValue('')
+    this.dataEntryFormControl.entityNameSingular.setValue('')
+    this.dataEntryFormControl.entityNamePlural.setValue('')
+
+    this.initFinalJsonObject();
+
+  }
+
   onSubmit() {
     this.submitted = true;
     if (this.dataEntryForm.valid) {
-      alert('Form Submitted succesfully!!!\n Check the values in browser console.');
-      //console.table(this.dataEntryForm.value);
-
+      
       this.alterObjectAsPerBackendSpecifications();
 
       // ref: https://medium.com/techiediaries-com/send-http-post-with-angular-9-8-httpclient-by-example-61e2dfdee8a9
       this.service.sendPostRequest(this.finalJsonObject).subscribe(
         res => {
           console.log(res);
+          this.toastr.success(res.message);
+          this.reset();
         }
       );
       
@@ -239,6 +251,8 @@ export class AppComponent implements OnInit  {
     this.dataEntryFormControl.validationRules.setValue(''); 
 
     document.getElementById("formFieldLabel")?.focus();
+
+    this.toastr.success("Form definition has been added. You can add more form defenitions, or finally submit the form using the 'Next' button below.");
   }  
 
   generateFile(){
