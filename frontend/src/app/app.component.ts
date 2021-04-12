@@ -14,26 +14,16 @@ export class AppComponent implements OnInit  {
 
   /* references: https://www.freecodecamp.org/news/how-to-validate-angular-reactive-forms/ */
 
-  title = 'frontend';
-
   dataEntryForm!: FormGroup;
   submitted = false;
-  finalJsonObject : any;
-  generateDataLinkClicked : boolean
-  downloadLinkClicked : boolean
-  downloadJsonHref : SafeUrl
-  uploadJsonFile!: File
+  finalJsonObject : any;  
 
   constructor(
     private service: AppService,
     private fb: FormBuilder,
     private toastr: ToastrService,
     private sanitizer: DomSanitizer
-  ) { 
-    this.generateDataLinkClicked = false
-    this.downloadLinkClicked = false
-    this.downloadJsonHref = ""
-  }
+  ) { }
 
   // this function has been taken from: https://stackoverflow.com/questions/196972/convert-string-to-title-case-with-javascript?page=1&tab=votes#tab-top
   toTitleCase(str: string) {
@@ -254,63 +244,5 @@ export class AppComponent implements OnInit  {
 
     this.toastr.success("Form definition has been added. You can add more form defenitions, or finally submit the form using the 'Next' button below.");
   }  
-
-  generateFile(){
-
-    this.alterObjectAsPerBackendSpecifications();    
-
-    this.generateDataLinkClicked = true
-    this.downloadLinkClicked = false
-
-    //ref: https://stackoverflow.com/questions/42360665/angular2-to-export-download-json-file
-    var theJSON = JSON.stringify(this.finalJsonObject);
-
-    console.log(this.finalJsonObject);
-    console.log(theJSON);
-
-    var uri = this.sanitizer.bypassSecurityTrustUrl("data:text/json;charset=UTF-8," + encodeURIComponent(theJSON));
-    this.downloadJsonHref = uri;
-  }
-
-  downloadFile(){
-    this.generateDataLinkClicked = false
-    this.downloadLinkClicked = false
-
-    console.log(this.finalJsonObject);
-  }
-
-  onUploadedJsonFileChanged(event: any){
-    //ref: https://stackoverflow.com/questions/54971238/upload-json-file-using-angular-6
-    this.uploadJsonFile = event.target.files[0];  
-  }
-
-  processUploadedJson(){
-    this.generateDataLinkClicked = false
-    this.downloadLinkClicked = false
-
-    //ref: https://stackoverflow.com/questions/54971238/upload-json-file-using-angular-6
-    const fileReader = new FileReader();
-    fileReader.readAsText(this.uploadJsonFile, "UTF-8");
-    fileReader.onload = () => {
-
-      var fileReadResult = fileReader.result?.toString();
-      if(fileReadResult == null || fileReadResult == undefined) fileReadResult = ""
-      var jsonData = JSON.parse(fileReadResult)
-
-      //ref: https://stackoverflow.com/questions/5873624/parse-json-string-into-a-particular-object-prototype-in-javascript
-      this.finalJsonObject = Object.assign({}, jsonData)
-
-      this.dataEntryFormControl.webAppSourceCodePath.setValue(this.finalJsonObject['web_app_source_code_path'])
-      this.dataEntryFormControl.operatingSystem.setValue(this.finalJsonObject['operating_system'])      
-      this.dataEntryFormControl.tableName.setValue(this.finalJsonObject['database']['table_name'])
-      this.dataEntryFormControl.migrationClassName.setValue(this.finalJsonObject['database']['migration_class_name'])
-      this.dataEntryFormControl.entityNameSingular.setValue(this.finalJsonObject['code']['entityNameSingular'])
-      this.dataEntryFormControl.entityNamePlural.setValue(this.finalJsonObject['code']['entityNamePlural'])
-      this.dataEntryFormControl.nameOfFolderContainingViews.setValue(this.finalJsonObject['code']['nameOfFolderContainingViews'])
-
-    }
-    fileReader.onerror = (error) => {
-      console.log(error);
-    }
-  }
+  
 }

@@ -77,13 +77,13 @@
                       </div>
 
                       <div class="row">
-                        <div class="col-md-5">
+                        <div class="col-md-3">
                           <span class="span_bold">UI Form Definitons</span>
                           <p>
                             Here you have to provide some data regarding the HTML form for adding / editing records
                           </p>
                         </div>
-                        <div class="col-md-7">
+                        <div class="col-md-9">
                                                     <div class="form-group">
                                                       <label>Form field label</label>
                                                       <input tabindex="11" type="text" class="form-control" formControlName="formFieldLabel" id="formFieldLabel" placeholder="Form field label">
@@ -213,27 +213,7 @@
                       <div class="form-group" style="text-align:right">
                           <input tabindex="27" type="submit" class="btn btn-success" value="Next" />
                       </div>
-
-                      <div [hidden]="generateDataLinkClicked == true && downloadLinkClicked == false" style="padding-top:5%">
-                        You can save the data entered in the form in a downloadable file, and use it later on.
-                        <br />
-                        To save the data, click the link below
-                        <br />
-                        <a (click)="generateFile()" class="btn btn-success">Generate file</a>
-                      </div>
-        
-                      <div [hidden]="generateDataLinkClicked == false && downloadLinkClicked == false" style="padding-top:5%">
-                          <a (click)="downloadFile()" class="btn btn-success" [href]="downloadJsonHref" download="data_as_json.json">Download data</a>
-                      </div>
                       
-                      <div style="padding-top:5%">
-                        If you aleady have a previously downloaded file, upload it to automatically fill up the form.
-                        <br />
-                        
-                        <!-- ref: https://stackoverflow.com/questions/54971238/upload-json-file-using-angular-6 -->
-                        <input type="file" id="uploadedJson" (change)="onUploadedJsonFileChanged($event)" />
-                        <a (click)="processUploadedJson()" class="btn btn-success">Next</a>
-                      </div>
 
                   </form>
               </div>
