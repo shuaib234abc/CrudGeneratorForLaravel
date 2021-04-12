@@ -5,7 +5,7 @@ license and copyright related information regarding CoreUI
 * CoreUI - Free Bootstrap Admin Template
 * @version v4.0.0-alpha.2
 * @link https://coreui.io
-* Copyright (c) 2021 creativeLabs Łukasz Holeczek
+* Copyright (c) 2021 creativeLabs Lukasz Holeczek
 * Licensed under MIT (https://coreui.io/license)
 
 -->
