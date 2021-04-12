@@ -32,6 +32,7 @@ def copy_template_files():
         subprocess.run(["cp", "templates_part_1/view.blade.php", "output_part_1/view.blade.php"])
         subprocess.run(["cp", "templates_part_1/web.php", "output_part_1/web.php"])
         subprocess.run(["cp", "templates_part_2/menu.js", "output_part_2/menu.js"])
+        subprocess.run(["cp", "templates_part_2/regex_definitions.js", "output_part_2/regex_definitions.js"])
     #}
     elif(operating_system == "windows"):
     #{
@@ -47,6 +48,7 @@ def copy_template_files():
         shutil.copyfile("templates_part_1\\view.blade.php", "output_part_1\\view.blade.php")
         shutil.copyfile("templates_part_1\\web.php", "output_part_1\\web.php")
         shutil.copyfile("templates_part_2\\menu.js", "output_part_2\\menu.js")
+        shutil.copyfile("templates_part_2\\regex_definitions.js", "output_part_2\\regex_definitions.js")        
     #}
 
 
@@ -652,6 +654,7 @@ def move_output_files_to_source_code_location():
         subprocess.run(["mv", "output_part_1/view.blade.php", web_app_source_code_path + "/resources/views/" + all_raw_data['code']['entityNamePlural'].lower() + "/view.blade.php"])
         subprocess.run(["mv", "output_part_1/" + all_raw_data['code']['entityNameSingular'].lower() + ".js", web_app_source_code_path + "/public/custom/js/gridloading/" + all_raw_data['code']['entityNameSingular'].lower() + ".js"])
         subprocess.run(["mv", "output_part_2/" + all_raw_data['code']['entityNameSingular'].lower() + ".js", web_app_source_code_path + "/public/custom/js/validation/" + all_raw_data['code']['entityNameSingular'].lower() + ".js"])
+        subprocess.run(["mv", "output_part_2/regex_definitions.js", web_app_source_code_path + "/public/custom/js/validation/regex_definitions.js"])
         subprocess.run(["mv", "output_part_1/" + all_raw_data['code']['entityNameSingular'] + ".php", web_app_source_code_path + "/app/Models/" + all_raw_data['code']['entityNameSingular'] + ".php"])
         subprocess.run(["mv", "output_part_1/" + all_raw_data['code']['entityNameSingular'] + "ApiController.php", web_app_source_code_path + "/app/Http/Controllers/" + all_raw_data['code']['entityNameSingular'] + "ApiController.php"])
         subprocess.run(["mv", "output_part_1/" + all_raw_data['code']['entityNameSingular'] + "Controller.php", web_app_source_code_path + "/app/Http/Controllers/" + all_raw_data['code']['entityNameSingular'] + "Controller.php"])
@@ -689,6 +692,7 @@ def move_output_files_to_source_code_location():
         shutil.move("output_part_1\\view.blade.php", web_app_source_code_path + "\\resources\\views\\" + all_raw_data['code']['entityNamePlural'].lower() + "\\view.blade.php")
         shutil.move("output_part_1\\" + all_raw_data['code']['entityNameSingular'].lower() + ".js", web_app_source_code_path + "\\public\\custom\\js\\gridloading\\" + all_raw_data['code']['entityNameSingular'].lower() + ".js")
         shutil.move("output_part_2\\" + all_raw_data['code']['entityNameSingular'].lower() + ".js", web_app_source_code_path + "\\public\\custom\\js\\validation\\" + all_raw_data['code']['entityNameSingular'].lower() + ".js")
+        shutil.move("output_part_2\\regex_definitions.js", web_app_source_code_path + "\\public\\custom\\js\\validation\\regex_definitions.js")        
         shutil.move("output_part_1\\" + all_raw_data['code']['entityNameSingular'] + ".php", web_app_source_code_path + "\\app\\Models\\" + all_raw_data['code']['entityNameSingular'] + ".php")
         shutil.move("output_part_1\\" + all_raw_data['code']['entityNameSingular'] + "ApiController.php", web_app_source_code_path + "\\app\\Http\\Controllers\\" + all_raw_data['code']['entityNameSingular'] + "ApiController.php")
         shutil.move("output_part_1\\" + all_raw_data['code']['entityNameSingular'] + "Controller.php", web_app_source_code_path + "\\app\\Http\\Controllers\\" + all_raw_data['code']['entityNameSingular'] + "Controller.php")
@@ -697,6 +701,7 @@ def move_output_files_to_source_code_location():
 
 
 #}
+
 
 # references:
 # https://flask.palletsprojects.com/en/1.1.x/quickstart/#a-minimal-application
@@ -726,10 +731,10 @@ def main():
     change_main_controller()
     change_blade_file_for_view()
     change_web_php_file_snippet()
-    move_output_files_to_source_code_location()
+    #move_output_files_to_source_code_location()
 
     return_object = {}                                      # ref: https://www.w3schools.com/python/python_dictionaries.asp
-    return_object["message"] = "Operation successful"
+    return_object["message"] = "Operation successful. Please check your target application and run the scaffolded code."
     return_object["response_code"] = 200
 
     return return_object            # ref: https://stackoverflow.com/questions/13081532/return-json-response-from-flask-view

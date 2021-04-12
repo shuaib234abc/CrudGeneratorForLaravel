@@ -159,12 +159,15 @@
                                                     </div>
 
                                                     <div class="form-group" [hidden]="dataEntryFormControl.formFieldType.value == 'file'">
-                                                      <label>Validation rules</label>
+                                                      <label>Validation rules</label>                                                      
                                                       <select tabindex="25" class="form-control" formControlName="validationRules" id="validationRules">
                                                         <option value="nameWithSpaceRegex">Only alphabets, spaces and the following characters: ' - .</option>
                                                         <option value="numberRegex">Only numbers</option>
                                                         <option value="moneyRegex">Only monetary values (numbers with two decimal places)</option>
                                                         <option value="nameWithSpaceAndNumbersRegex">Only alphabets, numbers, spaces and the following characters: ' - .</option>
+                                                        <option value="addressRegex">Only alphabets, numbers, spaces and the following characters: ' - . , # /</option>
+                                                        <option value="emailRegex">Email</option>                                                        
+                                                        <option value="longDescriptionRegex">Alphabets, numbers, \ & , ; ' - . and spaces</option>
                                                       </select>
                                                       <span class="text-danger"
                                                           *ngIf="(dataEntryFormControl.validationRules.touched || submitted) && dataEntryFormControl.validationRules.errors?.required">
