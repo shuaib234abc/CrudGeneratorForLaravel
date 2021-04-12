@@ -18,6 +18,7 @@ This project was implemented using Python and Angular 11.
 4. Blade templates for add, edit, 'view single' and 'view data in grid'
 5. Data grid is populated using jQuery datatables (https://datatables.net) with server side pagination. The javascript code for datatables is scaffolded.
 6. The form validation in add and edit page is performed using (https://jqueryvalidation.org). The javascript code for validation is scaffolded.
+7. Routes for web.php
 
 ## Pre-requisites for running this app
 
@@ -25,28 +26,34 @@ This project was implemented using Python and Angular 11.
 2. Python 3.x
 3. Flask framework (https://flask.palletsprojects.com/en/1.1.x/)
 4. Make sure the ports 4200 and 5000 are free. These are used by the Angular and Python app, respectively. If any port is not free, you can specify an alternative port when running the application.
+5. The application scaffolds a delete mechanism using jQuery AJAX. For this, you have to add the following code within the html head section of your blade template. References: https://laracasts.com/discuss/channels/laravel/how-to-fix-csrf-token-mismatch-for-patch-ajax-request-2nd-time
+```html
+<meta name="csrf-token" content="{{ csrf_token() }}" />
+```
+6. If there are other ways of fixing the CSRF token mismatch, you can use that too. Personally, I have a common blade template for all my pages, so I put the meta tag in the head section of that template.
 
 ## Running the app
 
 1. Clone the repository.
-2. Navigate to <project directory>/backend using the command line
+2. Navigate to **/project directory/backend** using the command line
 3. python -m flask run
-4. Navigate to <project directory>/frontend using the command line
+4. Navigate to **/project directory/frontend** using the command line
 5. npm install
 6. npm serve
 7. Open your browser to `http://localhost:4200/`
 8. Fill up the form as per your Laravel application CRUD requirements
 9. Submit the form
 10. If the form is submitted successfully, check the Laravel application folder and see if the new files have been generated.
-11. The scaffolding application assumes that your target Laravel application is using a common template for all CRUD pages. The generated blade files will extend from main.blade.php in <laravel app>/resources/views/layouts/
-12. The common blade template should have thw following: 
+11. The scaffolding application creates two new controllers. Routes are also scaffolded for these controllers. After submitting the form, go to **/Scaffolding app/backend/output_part_1/web.php**. Copy the relevant lines to the web.php of your Laravel app.
+12. The scaffolding application assumes that your target Laravel application is using a common template for all CRUD pages. The generated blade files will extend from main.blade.php in **/laravel app/resources/views/layouts/**
+13. The common blade template should have thw following: 
 
 code | description
 ------------ | -------------
 `@yield('content')`  | for displaying the HTML
 `@yield('custom_script')` | for the custom Javascript code
 
-13. This is how a generated blade file looks like
+14. This is how a generated blade file looks like
 
 ```blade
 
@@ -68,10 +75,11 @@ code | description
 
 ## How the application works
 
-1. The templates for the scaffolded code are in <project directory>/backend/templates_part_1 and <project directory>/backend/templates_part_2 folder.
+1. The templates for the scaffolded code are in **/project directory/backend/templates_part_1** and **/project directory/backend/templates_part_2** folder.
 2. After the user submits the form specifying information about the CRUD pages, find-and-replace strategy is used to edit the template files.
 3. After all files are edited, they are copied to the target Laravel project directory specified by the user.
 4. Laravel has a well-formed directory structure, so the app knows where to put each file.
+5. The scaffolding tool creates the folders **/laravel project directory/public/custom/js**, and **/laravel project directory>/public/custom/css** . Custom Javascript and custom CSS files are kept here. Custom Javascript files are for form validation and code for jQuery datatables.
 
 ## Third party libraries
 

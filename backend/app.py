@@ -677,6 +677,9 @@ def move_output_files_to_source_code_location():
             newpath = web_app_source_code_path + "\\" + "public\\custom\\js"
             if not os.path.exists(newpath):
                 os.makedirs(newpath)
+            newpath = web_app_source_code_path + "\\" + "public\\custom\\css"
+            if not os.path.exists(newpath):
+                os.makedirs(newpath)                
             newpath = web_app_source_code_path + "\\" + "public\\custom\\js\\gridloading"
             if not os.path.exists(newpath):
                 os.makedirs(newpath)
