@@ -39,7 +39,9 @@ This project was implemented using Python and Angular 11.
 9. Submit the form
 10. If the form is submitted successfully, check the Laravel application folder and see if the new files have been generated.
 11. The scaffolding application assumes that your target Laravel application is using a common template for all CRUD pages. The generated blade files will extend from main.blade.php in <laravel app>/resources/views/layouts/
-12. The common blade template should have a: 
+12. The common blade template should have thw following: 
+code | description
+------------ | -------------
 `@yield('content')`  | for displaying the HTML
 `@yield('custom_script')` | for the custom Javascript code
 13. This is how a generated blade file looks like
