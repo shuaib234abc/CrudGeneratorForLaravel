@@ -1,24 +1,23 @@
 # CRUD Generator for Laravel
 
 It is a lengthly task to create even a CRUD functionality in Laravel. This is a small application where you just specify some information about your entity, and all the relevant code files for CRUD functionality are automatically generated!.
-
-** Features 
-- 1. Full CRUD functionality (View data in grid, view single, add, edit, delete)
-- 2. Nice looking data grid with server side pagination
-- 3. Form validation
-- 4. Bootstrap used
-- 5. Easy to use interface ... just specify some information about your entity in a form and submit
-- 5. Plug and play ... the scaffolded files are copied to your target Laravel project automatically
-
-** The following files are scaffolded
-- 1. Controller
-- 2. Model
-- 3. Migration class
-- 4. Blade templates for add, edit, 'view single' and 'view data in grid'
-- 5. Data grid is populated using jQuery datatables (https://datatables.net) with server side pagination. The javascript code for datatables is scaffolded.
-- 6. The form validation in add and edit page is performed using (https://jqueryvalidation.org). The javascript code for validation is scaffolded.
-
 This project was implemented using Python and Angular 11.
+
+## Features 
+1. Full CRUD functionality (View data in grid, view single, add, edit, delete)
+2. Nice looking data grid with server side pagination
+3. Form validation
+4. Bootstrap used
+5. Easy to use interface ... just specify some information about your entity in a form and submit
+6. Plug and play ... the scaffolded files are copied to your target Laravel project automatically
+
+## What is scaffolded?
+1. Controller
+2. Model
+3. Migration class
+4. Blade templates for add, edit, 'view single' and 'view data in grid'
+5. Data grid is populated using jQuery datatables (https://datatables.net) with server side pagination. The javascript code for datatables is scaffolded.
+6. The form validation in add and edit page is performed using (https://jqueryvalidation.org). The javascript code for validation is scaffolded.
 
 ## Pre-requisites for running this app
 
@@ -42,7 +41,8 @@ This project was implemented using Python and Angular 11.
 11. The scaffolding application assumes that your target Laravel application is using a common template for all CRUD pages. The generated blade files will extend from main.blade.php in <laravel app>/resources/views/layouts/
 12. The common blade template should have a @yield('content')  (for displaying the HTML)  and a @yield('custom_script')   (for the custom Javascript code)
 13. This is how a generated blade file looks like
-<pre>
+
+```blade
 
 @extends('layouts.main')
 
@@ -58,7 +58,7 @@ This project was implemented using Python and Angular 11.
 
 @stop
 
-</pre>
+```
 
 ## How the application works
 
