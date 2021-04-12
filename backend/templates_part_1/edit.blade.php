@@ -52,6 +52,7 @@ license and copyright related information regarding CoreUI
 
 @section('custom_script')
 
+<script src="{{ URL::asset('custom/js/validation/regex_definitions.js') }}"></script>
 <script src="{{ URL::asset('custom/js/validation/menu.js') }}"></script>
 
 @stop

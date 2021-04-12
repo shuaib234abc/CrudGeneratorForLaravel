@@ -64,5 +64,47 @@ __SWITCH_CASE_CODE_PLACEHOLDER__
 
     }
 
+    //common method
+    protected function getNavigationParameters(Request $request)
+    {
+      $datatableNavigationParams = new \stdClass();
+      $datatableNavigationParams->draw = "";
+      $datatableNavigationParams->order = "";
+      $datatableNavigationParams->orderDir = "";
+      $datatableNavigationParams->startRec = "";
+      $datatableNavigationParams->pageSize = "";
+      $datatableNavigationParams->searchBoxValue = "";
+
+      //references: https://www.codegrepper.com/code-examples/php/laravel+get+all+request+parameters
+      $allGetParams = $request->all();
+
+      //references: https://stackoverflow.com/questions/38737019/laravel-5-2-get-query-string
+      if ($request->has('draw')) {
+       $datatableNavigationParams->draw = $request->input('draw');
+      }
+      if ($allGetParams['order'] != null
+          && $allGetParams['order'][0] != null
+          && $allGetParams['order'][0]['column'] != null) {
+       $datatableNavigationParams->order = $allGetParams['order'][0]['column'];
+      }
+      if ($allGetParams['order'] != null
+          && $allGetParams['order'][0] != null
+          && $allGetParams['order'][0]['dir'] != null) {
+       $datatableNavigationParams->orderDir = $allGetParams['order'][0]['dir'];
+      }
+      if ($request->has('start')) {
+       $datatableNavigationParams->startRec = $request->input('start');
+      }
+      if ($request->has('length')) {
+       $datatableNavigationParams->pageSize = $request->input('length');
+      }
+      if ($allGetParams['search'] != null
+          && $allGetParams['search']['value'] != null) {
+       $datatableNavigationParams->searchBoxValue = $allGetParams['search']['value'];
+      }
+
+      return $datatableNavigationParams;
+
+    }
 
 }

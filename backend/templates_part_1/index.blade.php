@@ -70,5 +70,6 @@ __PLACEHOLDER_TABLE_FIELDS__
 @section('custom_script')
 
 <script src="{{ URL::asset('custom/js/gridloading/menu.js') }}"></script>
+<link rel="stylesheet" href="{{ URL::asset('custom/css/custom_styles.css') }}" type="text/css" />
 
 @stop
